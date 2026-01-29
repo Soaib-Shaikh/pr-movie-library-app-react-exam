@@ -1,0 +1,47 @@
+import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector,} from "react-redux";
+import { logoutUser } from "../features/auth/authSlice";
+
+const Navbar = () => {
+  const { isAuthenticated, user } = useSelector(state => state.users);
+  const dispatch = useDispatch();
+
+  return (
+    <nav className="navbar navbar-dark bg-dark px-4">
+      <NavLink className="navbar-brand text-warning fw-bold" to="/">
+        🎬 MovieHub
+      </NavLink>
+
+      <div className="d-flex gap-2">
+        <NavLink className="btn btn-outline-light btn-sm" to="/">
+          Home
+        </NavLink>
+
+        {!isAuthenticated ? (
+          <>
+            <NavLink className="btn btn-outline-success btn-sm" to="/login">
+              Login
+            </NavLink>
+            <NavLink className="btn btn-outline-primary btn-sm" to="/signup">
+              Signup
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <span className="text-light align-self-center">
+              Hi, {user?.name || user?.email}
+            </span>
+            <button
+              onClick={() => dispatch(logoutUser())}
+              className="btn btn-danger btn-sm"
+            >
+              Logout
+            </button>
+          </>
+        )}
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
