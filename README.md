@@ -4,7 +4,7 @@ A simple React + Vite application that lets you browse, search and view details 
 
 ## Deploy Link
 
-Link :- https://pr-movie-library-app-react-exam.vercel.app/login
+Link :- https://pr-movie-library-app-react-exam.vercel.app/
 
 ---
 
