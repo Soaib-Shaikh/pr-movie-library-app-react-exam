@@ -7,7 +7,7 @@ const authSlice = createSlice({
   initialState: {
     user: savedUser,
     isAuth: !!savedUser
-  },
+  },  
   reducers: {
     signupUser(state, action) {
       state.user = action.payload;

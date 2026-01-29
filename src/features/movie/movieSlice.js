@@ -42,11 +42,24 @@ export const getMovieDetails = createAsyncThunk(
   }
 );
 
+export const getTrendingMovies = createAsyncThunk(
+  "movies/getTrendingMovies",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await movieApi.get("/trending/movie/day");
+      return res.data.results;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const movieSlice = createSlice({
   name: "movies",
   initialState: {
     movies: [],
     selectedMovie: null,
+    trendingMovies: [],  
     loading: false,
     error: null
   },
@@ -75,7 +88,20 @@ const movieSlice = createSlice({
       .addCase(getMovieDetails.fulfilled, (state, action) => {
         state.loading = false;
         state.selectedMovie = action.payload;
-      });
+      })
+
+      // trending movie
+      .addCase(getTrendingMovies.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getTrendingMovies.fulfilled, (state, action) => {
+        state.loading = false;
+        state.trendingMovies = action.payload;
+      })
+      .addCase(getTrendingMovies.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
   }
 });
 

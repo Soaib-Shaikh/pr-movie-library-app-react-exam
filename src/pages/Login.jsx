@@ -1,17 +1,22 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../features/auth/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(loginUser({ email }));
+
+    const userData = {
+      email,
+      username: email.split("@")[0] // 👈 FIX
+    };
+
+    dispatch(loginUser(userData));
     navigate("/");
   };
 
@@ -19,61 +24,52 @@ const Login = () => {
     <>
       <style>{`
         body {
-          background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+          background: radial-gradient(circle at top, #0f2027, #000);
           min-height: 100vh;
         }
-        .auth-card {
-          background: rgba(255,255,255,0.1);
-          backdrop-filter: blur(12px);
-          border-radius: 16px;
-          color: #fff;
+        .login-box {
+          background: rgba(0,0,0,0.65);
+          border: 1px solid #00e5ff;
+          box-shadow: 0 0 25px #00e5ff80;
+          border-radius: 18px;
+          color: #00e5ff;
         }
-        .auth-card input {
+        .login-box input {
           background: transparent;
+          border: 1px solid #00e5ff;
           color: #fff;
-          border: 1px solid #ccc;
         }
-        .auth-card input::placeholder {
-          color: #ccc;
-        }
-        .auth-btn {
-          background: linear-gradient(45deg, #00c6ff, #0072ff);
+        .login-btn {
+          background: linear-gradient(90deg,#00e5ff,#0072ff);
           border: none;
         }
       `}</style>
 
       <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
-        <div className="col-md-4 auth-card p-4 shadow-lg">
-          <h3 className="text-center mb-4">Welcome Back 🎬</h3>
+        <div className="col-md-4 login-box p-4">
+          <h3 className="text-center mb-4">🎬 Movie Login</h3>
 
           <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <input
-                type="email"
-                className="form-control"
-                placeholder="Email"
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
+            <input
+              className="form-control mb-3"
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              className="form-control mb-3"
+              placeholder="Password"
+              required
+            />
 
-            <div className="mb-3">
-              <input
-                type="password"
-                className="form-control"
-                placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-
-            <button className="btn auth-btn w-100 text-white">
+            <button className="btn login-btn w-100 text-white">
               Login
             </button>
           </form>
 
           <p className="text-center mt-3">
-            New user? <a href="/signup" className="text-info">Signup</a>
+            New here? <Link to="/signup" className="text-info">Create account</Link>
           </p>
         </div>
       </div>

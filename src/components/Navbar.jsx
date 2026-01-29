@@ -70,11 +70,11 @@ const Navbar = () => {
             🎬 MovieHub
           </NavLink>
 
-          <NavLink to="/" className="nav-link-custom">
+          <NavLink to="/popular" className="nav-link-custom">
             Popular
           </NavLink>
 
-          <NavLink to="/" onClick={() => dispatch(getAllMovies())} className="nav-link-custom">
+          <NavLink to="/trending" onClick={() => dispatch(getAllMovies())} className="nav-link-custom">
             Trending
           </NavLink>
         </div>
@@ -103,7 +103,7 @@ const Navbar = () => {
           ) : (
             <>
               <div className="user-chip">
-                👋 {user?.username}
+                👋 {user?.username || user?.email?.split("@")[0]}
               </div>
               <button
                 className="btn btn-danger btn-sm"

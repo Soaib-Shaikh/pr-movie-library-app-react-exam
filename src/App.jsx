@@ -5,6 +5,8 @@ import Signup from "./pages/Signup";
 import MovieList from "./components/MovieList";
 import MovieDetails from "./components/MovieDetails";
 import PrivateRoute from "./components/PrivateRoute";
+import Trending from "./pages/Trending";
+import Popular from "./pages/Popular";
 
 const App = () => {
   const location = useLocation();
@@ -37,7 +39,23 @@ const App = () => {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/popular"
+          element={
+            <PrivateRoute>
+              <Popular />
+            </PrivateRoute>
+          }
+        />
 
+        <Route
+          path="/trending"
+          element={
+            <PrivateRoute>
+              <Trending />
+            </PrivateRoute>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
