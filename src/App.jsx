@@ -1,21 +1,43 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import MovieList from "./components/MovieList";
+import MovieDetails from "./components/MovieDetails";
 import PrivateRoute from "./components/PrivateRoute";
 
-
 const App = () => {
+  const location = useLocation();
+
+  // Navbar hide on auth pages
+  const hideNavbar =
+    location.pathname === "/login" ||
+    location.pathname === "/signup";
+
   return (
     <>
-      <Navbar />
+      {!hideNavbar && <Navbar />}
+
       <Routes>
-        <Route path="/" element={
-          <PrivateRoute>
-            <MovieList />
-          </PrivateRoute>
-        } />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <MovieList />
+            </PrivateRoute>
+          }
+        />
+
+        {/* 🔥 Movie Details Route */}
+        <Route
+          path="/movie/:id"
+          element={
+            <PrivateRoute>
+              <MovieDetails />
+            </PrivateRoute>
+          }
+        />
+
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
