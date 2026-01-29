@@ -3,7 +3,7 @@ import { useDispatch, useSelector,} from "react-redux";
 import { logoutUser } from "../features/auth/authSlice";
 
 const Navbar = () => {
-  const { isAuthenticated, user } = useSelector(state => state.users);
+  const { isAuth, user } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   return (
@@ -17,7 +17,7 @@ const Navbar = () => {
           Home
         </NavLink>
 
-        {!isAuthenticated ? (
+        {!isAuth ? (
           <>
             <NavLink className="btn btn-outline-success btn-sm" to="/login">
               Login
@@ -29,7 +29,7 @@ const Navbar = () => {
         ) : (
           <>
             <span className="text-light align-self-center">
-              Hi, {user?.name || user?.email}
+              Hi, {user?.username || user?.email }
             </span>
             <button
               onClick={() => dispatch(logoutUser())}

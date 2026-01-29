@@ -1,8 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import MovieList from "./components/MovieList";
-import MovieDetails from "./components/MovieDetails";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import MovieList from "./components/MovieList";
+import PrivateRoute from "./components/PrivateRoute";
 
 
 const App = () => {
@@ -10,9 +11,13 @@ const App = () => {
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<MovieList />} />
-        <Route path="/movie/:id" element={<MovieDetails />} />
+        <Route path="/" element={
+          <PrivateRoute>
+            <MovieList />
+          </PrivateRoute>
+        } />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </>
   );

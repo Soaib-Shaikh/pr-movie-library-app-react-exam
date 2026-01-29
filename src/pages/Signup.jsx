@@ -1,30 +1,72 @@
-import React from 'react'
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { signupUser } from "../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
-  return (
-    <div className='container'>
-        <div className="row justify-content-center mt-5">
-            <div className="col-md-6">
-                <form action="" method="post">
-                    <h2>Signup</h2>
-                    <div className="mb-3">
-                        <label htmlFor="username" className="foorm-llaabel">Username</label>
-                        <input type="text" name="username" id="username" className="form-control" />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="foorm-llaabel">Email</label>
-                        <input type="email" name="email" id="email" className="form-control" />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="password" className="foorm-llaabel">Password</label>
-                        <input type="password" name="password" id="password" className="form-control" />
-                    </div>
-                    <button type="submit" className="btn btn-primary">Signup</button>
-                </form>
-            </div>
-        </div>
-    </div>
-  )
-}
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: ""
+  });
 
-export default Signup
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(signupUser(form));
+    navigate("/");
+  };
+
+  return (
+    <>
+      <style>{`
+        body {
+          background: linear-gradient(135deg,#141e30,#243b55);
+          min-height:100vh;
+        }
+        .auth-card {
+          background: rgba(255,255,255,0.1);
+          backdrop-filter: blur(12px);
+          border-radius: 16px;
+          color:#fff;
+        }
+      `}</style>
+
+      <div className="container d-flex justify-content-center align-items-center" style={{minHeight:"100vh"}}>
+        <div className="col-md-4 auth-card p-4 shadow">
+          <h3 className="text-center mb-3">Create Account</h3>
+
+          <form onSubmit={handleSubmit}>
+            <input
+              className="form-control my-2"
+              placeholder="Username"
+              onChange={e => setForm({...form, username:e.target.value})}
+              required
+            />
+            <input
+              className="form-control my-2"
+              placeholder="Email"
+              onChange={e => setForm({...form, email:e.target.value})}
+              required
+            />
+            <input
+              type="password"
+              className="form-control my-2"
+              placeholder="Password"
+              onChange={e => setForm({...form, password:e.target.value})}
+              required
+            />
+
+            <button className="btn btn-success w-100 mt-2">
+              Signup
+            </button>
+          </form>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Signup;

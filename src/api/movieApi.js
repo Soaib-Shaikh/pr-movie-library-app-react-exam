@@ -1,9 +1,12 @@
 import axios from "axios";
 
 export const movieApi = axios.create({
-    baseURL: import.meta.env.VITE_MOVIE_BASE_URL,
-    headers: {
-    "X-RapidAPI-Key": import.meta.env.VITE_RAPID_API_KEY,
-    "X-RapidAPI-Host": import.meta.env.VITE_RAPID_API_HOST
+  baseURL: import.meta.env.VITE_TMDB_BASE_URL,
+  params: {
+    api_key: import.meta.env.VITE_TMDB_API_KEY
+  },
+  headers: {
+    Authorization: `Bearer ${import.meta.env.VITE_TMDB_READ_TOKEN}`,
+    "Content-Type": "application/json"
   }
-})
+});
